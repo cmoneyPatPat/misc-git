@@ -18,6 +18,7 @@ view: zendesk_sla_time_to_reply_calendar {
                         WHEN 'Document Request and Taxes' THEN '720'
                         WHEN 'Banking 2.0' THEN '720'
                         WHEN 'ACAT' THEN '720'
+                        WHEN 'Relationship Management' THEN '720'
                         WHEN 'Cash Management' THEN '720'
                         WHEN 'Conversion Escalations' THEN '720'
                         WHEN 'Social' THEN '720'
