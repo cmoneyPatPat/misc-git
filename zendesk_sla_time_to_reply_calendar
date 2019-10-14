@@ -59,7 +59,23 @@ view: zendesk_sla_time_to_reply_calendar {
                     AND  ((status  NOT IN ('pending', 'solved', 'closed') OR status IS NULL))
                     THEN 1
               ELSE 0
-            END AS "is_within_4_hours_to_sla_breach"
+            END AS "is_within_4_hours_to_sla_breach",
+            CASE
+              WHEN (datediff(minute, created_time, getdate()) >=  (sla_reply_time_in_minutes_calendar -120 ) )
+                    AND (datediff(minute, created_time, getdate()) < sla_reply_time_in_minutes_calendar)
+                    AND ( initially_assigned_time IS NULL )
+                    AND  ((status  NOT IN ('pending', 'solved', 'closed') OR status IS NULL))
+                    THEN 1
+              ELSE 0
+            END AS "is_within_2_hours_to_sla_breach"
+            CASE
+              WHEN (datediff(minute, created_time, getdate()) >=  (sla_reply_time_in_minutes_calendar) )
+                    AND (datediff(minute, created_time, getdate()) < sla_reply_time_in_minutes_calendar)
+                    AND ( initially_assigned_time IS NULL )
+                    AND  ((status  NOT IN ('pending', 'solved', 'closed') OR status IS NULL))
+                    THEN 1
+              ELSE 0
+            END AS "is_breached"
             FROM SLA
             WHERE created_time IS NOT NULL
              ;;
@@ -104,6 +120,11 @@ view: zendesk_sla_time_to_reply_calendar {
     type: number
     sql: ${TABLE}.is_within_4_hours_to_sla_breach ;;
   }
+  
+  dimension: is_within_2_hours_to_sla_breach {
+    type: number
+    sql: ${TABLE}.is_within_2_hours_to_sla_breach ;;
+  }
 
   measure: count_backlog{
     type: sum
@@ -113,6 +134,16 @@ view: zendesk_sla_time_to_reply_calendar {
   measure: count_within_4_hours_to_sla_breach{
     type: sum
     sql: ${TABLE}.is_within_4_hours_to_sla_breach ;;
+  }
+  
+  measure: count_within_2_hours_to_sla_breach{
+    type: sum
+    sql: ${TABLE}.is_within_2_hours_to_sla_breach ;;
+  }
+  
+  measure: is_breached{
+    type: sum
+    sql: ${TABLE}.is_breached ;;
   }
 
   set: detail {
