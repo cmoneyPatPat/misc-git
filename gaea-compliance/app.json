@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "GAEA: Compliance",
+    "slug": "gaea-compliance",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#0a0f0a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gaea.compliance"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0f0a"
+      },
+      "package": "com.gaea.compliance"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
